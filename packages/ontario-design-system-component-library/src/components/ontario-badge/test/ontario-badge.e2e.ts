@@ -24,7 +24,7 @@ describe('ontario-badge', () => {
 		});
 
 		it('renders changes to the class names when the colour prop is changed', async () => {
-			component.setProperty('colour', 'light-teal');
+			component.setProperty('colour', 'lightTeal');
 			await page.waitForChanges();
 
 			expect(element).toHaveClasses(['ontario-badge', 'ontario-badge--default-light']);
@@ -35,30 +35,12 @@ describe('ontario-badge', () => {
 			expect(element).toHaveClasses(['ontario-badge', 'ontario-badge--neutral-heavy']);
 		});
 
-		/*
-		 * TODO: Haven't found an ideal way yet to test the aria-label-text property and how
-		 * it should create an aria-label attribute on the element.
-		 */
-		// it('renders changes to the aria-label-text property', async () => {
-		// component.setProperty('aria-label-text', 'This is aria label text.');
-		// await page.waitForChanges();
+		it('renders changes to the aria-label-text property', async () => {
+			component.setProperty('ariaLabelText', 'This is aria label text.');
+			await page.waitForChanges();
 
-		// expect(element.getAttribute("ariaLabel")).toBe("This is aria label text.");
-
-		// expect(element).toHaveAttribute('aria-label');
-
-		// let v = await page.$eval(element, (element: { hasAttribute: (arg0: string) => any; }) => element.hasAttribute("aria-label"))
-		// expect(v).toBe(true);
-		// let el: any;
-		// let value = await page.evaluate(element => element ? element.getAttribute("aria-label") : null, el);
-		// expect(value).toBe(true);
-
-		// element.hasAttribute("aria-label").toBe(true);
-		// expect(hasAriaLabelAttribute).toBe(true);
-		// await page.evaluate(`${element}.getAttribute("data-Color")`)
-
-		// expect(element.getAttribute('aria-label')).toBe('This is aria label text.');
-		// });
+			expect(element).toEqualAttribute('aria-label', 'This is aria label text.');
+		});
 	});
 
 	describe('render text content changes', () => {
