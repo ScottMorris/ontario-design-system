@@ -306,12 +306,18 @@ export class OntarioDateInput {
 		// update date state
 		this.updateDateState(value, fieldType);
 
-		// TODO: verify are all the values numbers?
 		if (this.year && this.month && this.day) {
-			const desiredDate = new Date(
-				Date.UTC(parseInt(this.year), parseInt(this.month) - 1, parseInt(this.day), 0, 0, 0, 0),
-			);
-			this.internals?.setFormValue?.(desiredDate.toISOString());
+			const year = parseInt(this.year);
+			const month = parseInt(this.month);
+			const day = parseInt(this.day);
+
+			if (!isNaN(year) && !isNaN(month) && !isNaN(day)) {
+				const desiredDate = new Date(Date.UTC(year, month - 1, day, 0, 0, 0, 0));
+
+				if (!isNaN(desiredDate.getTime())) {
+					this.internals?.setFormValue?.(desiredDate.toISOString());
+				}
+			}
 		}
 	};
 
