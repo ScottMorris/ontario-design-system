@@ -39,24 +39,16 @@ describe('ontario-language-toggle', () => {
 		expect(page.rootInstance.size).toBe('default');
 	});
 
-	/**
-	 * TODO: Determine if this is testable.
-	 *
-	 * Not sure how to properly test against this, seems to be a race condition.
-	 *
-	 * Takes a few processes before the html lang attribute is updated.
-	 *
-	 * Using setTimeout() leads to a false positive.
-	 *
-	 * Using page.waitForChanges() or autoApplyChanges: true seem to have no effect.
-	 */
-	it.skip('should render a default language of English on the <html> tag if no language prop is passed', async () => {
+	it('should render a default language of English on the <html> tag if no language prop is passed', async () => {
+		document.documentElement.removeAttribute('lang');
+
 		const page = await newSpecPage({
 			components: [OntarioLanguageToggle],
 			html: `<ontario-language-toggle></ontario-language-toggle>`,
 		});
 
-		expect(page.rootInstance.language).toBe('en');
+		expect(document.documentElement.getAttribute('lang')).toBe('en');
+		expect(page.rootInstance.languageState).toBe('en');
 	});
 
 	it('should render a small size language toggle with a French default language when explicitly specified', async () => {
